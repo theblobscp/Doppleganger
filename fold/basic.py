@@ -55,7 +55,7 @@ class Basic(commands.Cog):
         prefix = await self.client.pg_con.fetchrow("SELECT prefix FROM guild WHERE guildid = $1",ctx.guild.id)
         prefix = prefix[0]
         cmd = cmd.lower()
-        if cmd is "none":
+        if cmd == "none":
             em = discord.Embed(title = "DoppleGanger Commands :- ",description = f"`{prefix}setaichatbot + #channel` To enjoy chatbot features\n`{prefix}setlogs + #channel` To get Logging Updates\n`{prefix}setmain + #channel` To get Welcome,member in and out Updates\n`{prefix}setsuggestion + #channel` To Be able to use suggestion command",color = 0x2F3136)
             em.set_thumbnail(url=self.client.user.avatar_url)    
             em.add_field(name = ":red_circle:   Search  ",value = "  \n\n`image`  `song` `youtube` `ques` `meme` `lyrics`",inline = False)
