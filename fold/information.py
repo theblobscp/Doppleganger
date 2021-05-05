@@ -1,5 +1,4 @@
 import datetime
-from fold.basic import text
 import os
 import discord
 from discord.activity import create_activity
