@@ -7,7 +7,6 @@ from discord.utils import get
 from bot import colors
 import os
 import wonderwords
-import YoutubeSearch
 import datetime
 import re
 
