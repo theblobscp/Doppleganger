@@ -1,5 +1,3 @@
-from fold.information import circle
-from typing import ItemsView
 import discord
 from discord import embeds
 from discord import client
