@@ -63,5 +63,5 @@ async def determine_prefix(bot, message):
     return [prefix[0]]
 
 client.command_prefix = determine_prefix
-client.run("NzgxNzM3NjM5MzIxMTQxMjY4.X8B_6Q.9iL3sr-KIgRDW-K3_k-hLSnYs_0")   
+client.run(os.environ["TOKEN"])   
 
