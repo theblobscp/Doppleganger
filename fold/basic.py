@@ -39,6 +39,8 @@ class Basic(commands.Cog):
 
     @commands.command(aliases= ['th'])
     async def thank(self,ctx ,member: discord.Member,*,reason = "for your help"):
+        await self.check(ctx.author.id)
+        await self.check(member.id)
         if await self.get(ctx.author.id)<200:
             em = discord.Embed(title = f"Not Sufficient Credits",description = f"{ctx.author.mention} doesn't have sufficient credits To Thank ",color = random.choice(colors))
             await ctx.send(embed = em,delete_after = 7)
@@ -254,7 +256,6 @@ class Basic(commands.Cog):
         em.set_author(name = ctx.author.name)
         em.set_footer(text = f"Change the suggestion channel by {prefix}set_suggestion #channel_name and remove suggestion command by {prefix}remove_sug")
         message = await channel.send(embed = em)
-        await channel.send(ctx.guild.owner.mention)
         await message.add_reaction("✅")
         await message.add_reaction("❎")
         await ctx.send(f"Your Suggestion have been succesfully sent ! :)\nCheck <#{id}>",delete_after = 10)

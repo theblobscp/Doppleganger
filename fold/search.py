@@ -100,11 +100,12 @@ class Search(commands.Cog):
             try:
                 res = client1.query(ques)
                 answer = next(res.results).text
+            
                 em = discord.Embed(title = f"Question : "+ ques +":question:",
-                        description = f"answer : "+ str(answer)+ ":exclamation:",color = random.choice(colors))
+                            description = f"answer : "+ str(answer)+ ":exclamation:",color = random.choice(colors))
                 await ctx.send(embed = em)  
             except:
-                await ctx.send(emerror)
+                await ctx.send(embed = emerror)
     
 
     @commands.command(aliases =['yo'])

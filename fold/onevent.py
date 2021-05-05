@@ -197,7 +197,7 @@ class Events(commands.Cog):
     async def on_member_join(self,member:discord.Member):
         guildid = member.guild.id
         channelid = await self.client.pg_con.fetchrow("SELECT mainchannel FROM guild WHERE guildid = $1",guildid)
-        if channelid is None:
+        if channelid[0] is None:
             return
         welcome = Image.open('welcome.png')
         asset = member.avatar_url_as(size = 256)
@@ -216,15 +216,15 @@ class Events(commands.Cog):
         welcome.paste(logo, (18, 18), logo)
         pfp.save("profilereal.png")
         draw = ImageDraw.Draw(welcome)
-        myFont = ImageFont.truetype('Roboto-Thin.ttf', 110)
-        myFont2 = ImageFont.truetype('Roboto-Thin.ttf', 50)
+        myFont = ImageFont.truetype('Roboto-Regular.ttf', 110)
+        myFont2 = ImageFont.truetype('Roboto-Regular.ttf', 50)
         myFont3 = ImageFont.truetype('DrumNBass-ywGy2.ttf', 80)
         draw.text((60,270),member.name.title(),font = myFont,fill = (0,0,0))
         draw.text((110,400),joined_at,font = myFont2,fill = (0,0,0))
         draw.text((60,580),f"To {member.guild.name.title()}",font = myFont3,fill = (255,255,255), stroke_width=3, stroke_fill=(0,0,0))
         welcome.save("profile.png") 
         wchannel = get(member.guild.channels, id=channelid[0])
-        embed = discord.Embed(description = f"{member.mention}** Welcome to CodeStacks ™ !!** \n Why not start with introducing yourself in Chats!",color = random.choice(colors))
+        embed = discord.Embed(description = f"{member.mention}** Welcome to {member.guild.name.title()} !!** \n Why not start with introducing yourself in Chats!",color = random.choice(colors))
         embed.set_image(url="attachment://profile.png")
         
         await wchannel.send(file = discord.File('profile.png'),embed = embed)

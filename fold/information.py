@@ -141,7 +141,7 @@ class Information(commands.Cog):
         bg = Image.open("lb.png")
         myFont = ImageFont.truetype('Roboto-Regular.ttf', 60)
         myFont2 = ImageFont.truetype('Roboto-Regular.ttf', 50)
-
+        print(tops)
         x = 10
         if len(tops)<10:
             x = len(tops)
@@ -153,6 +153,8 @@ class Information(commands.Cog):
         draw = ImageDraw.Draw(bg)
         for id,credits in tops.items():
             member= self.client.get_user(id)
+            if member is None:
+                continue
             if member.bot:
                 continue 
             draw.text((x,y),f"#{index}",font = myFont,fill = (255,255,255))  
@@ -321,6 +323,8 @@ class Information(commands.Cog):
         logo = circle(logo,(180,180))
 
         name = str(member)
+        if len(top_role)>12:
+            top_role = top_role[:13]
         if len(name) > 20:
             name = name[:21]
             
@@ -349,7 +353,7 @@ class Information(commands.Cog):
         prefix = await self.client.pg_con.fetchrow("SELECT prefix FROM guild WHERE guildid = $1",member.guild.id)
         prefix = prefix[0]
         if ava[0] =="default":
-            await ctx.send(f"{member.mention} can Also Buy/Set Different BackGround from the basic Gradient one\nType `{prefix}shop` to see the Background images list and `{prefix}swap + imgname` to change the background")
+            await ctx.send(f"{member.mention} can Also Buy/Set Different BackGround from the Default one\nType `{prefix}shop` to see the Background images list and `{prefix}swap + imgname` to change the background")
    
    
 def setup(client):

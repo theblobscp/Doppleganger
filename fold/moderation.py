@@ -42,8 +42,9 @@ class Moderation(commands.Cog):
             await ctx.send(embed = discord.Embed(title= "Missing Permissions",description = f"Bot doesn't have the required Perms to Ban {member.name}",color = discord.Colour.red()))
     @commands.command(aliases = ['ub'])
     @commands.has_permissions(ban_members=True, kick_members=True)
-    async def unban(self,ctx, member :discord.Member):
-        em = discord.Embed(description = f"{member.name} is Unbanned from {ctx.guild.name} by {ctx.author.name} ",color = discord.Colour.random() )
+    async def unban(self,ctx, member):
+        member_nam ,member_dis = member.split('#')
+        em = discord.Embed(description = f"{member_nam} is Unbanned from {ctx.guild.name} by {ctx.author.name} ",color = discord.Colour.random() )
         em.set_author(name=ctx.guild.owner.name,icon_url=ctx.guild.owner.avatar_url)
         banned = await ctx.guild.bans()
         member_nam ,member_dis = member.split('#')
@@ -56,7 +57,7 @@ class Moderation(commands.Cog):
                 await ctx.send(embed = em)
                 return
 
-            await ctx.send(member.name + ' was not found',delete_after =4)
+            await ctx.send(member + ' was not found',delete_after =4)
     @commands.command(aliases= ['m'])
     @commands.has_permissions(ban_members=True, kick_members=True)
     async def mute(self,ctx,member:discord.Member,amount = 2):
