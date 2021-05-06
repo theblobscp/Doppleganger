@@ -154,16 +154,16 @@ class Events(commands.Cog):
 
         prefix = await self.client.pg_con.fetchrow("SELECT prefix FROM guild WHERE guildid = $1",guild.id)
         prefix = prefix[0]
-        for channel in guild.channels:
-            if str(channel.type) == "text":
-                if "general" in channel.name or "main" in channel.name:
-                    await channel.send(f"Hi I am DoppleGanger :wave:\nThanks for Adding me Into {guild.name}. My Bot Prefix is `{prefix}` (Change it anytime By `{prefix}setprefix`) :partying_face: \nEnjoy Economy, Moderation, Welcome, Logs and many other such Commands :star_struck:\nType `{prefix}help` For more info\n\n-Code Stacks")
-                    await self.client.pg_con.execute("UPDATE guild SET mainchannel = $1 WHERE guildid = $2",channel.id,guild.id)
-                    break
-        await guild.create_role(name = "Muted",colour = 0xFF0C00)
-        muted = get(guild.roles, name="Muted")
-        for channel in guild.channels:
-            await channel.set_permissions(muted, send_messages = False) 
+        #for channel in guild.channels:
+        #    if str(channel.type) == "text":
+        #        if "general" in channel.name or "main" in channel.name:
+        #            await channel.send(f"Hi I am DoppleGanger :wave:\nThanks for Adding me Into {guild.name}. My Bot Prefix is `{prefix}` (Change it anytime By `{prefix}setprefix`) :partying_face: \nEnjoy Economy, Moderation, Welcome, Logs and many other such Commands :star_struck:\nType `{prefix}help` For more info\n\n-Code Stacks")
+        #            await self.client.pg_con.execute("UPDATE guild SET mainchannel = $1 WHERE guildid = $2",channel.id,guild.id)
+        #            break
+        #await guild.create_role(name = "Muted",colour = 0xFF0C00)
+        #muted = get(guild.roles, name="Muted")
+        #for channel in guild.channels:
+        #    await channel.set_permissions(muted, send_messages = False) 
 
 
     @tasks.loop(seconds=3600*10)   
