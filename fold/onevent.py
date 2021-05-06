@@ -154,16 +154,16 @@ class Events(commands.Cog):
 
         prefix = await self.client.pg_con.fetchrow("SELECT prefix FROM guild WHERE guildid = $1",guild.id)
         prefix = prefix[0]
-        #for channel in guild.channels:
-        #    if str(channel.type) == "text":
-        #        if "general" in channel.name or "main" in channel.name:
-        #            await channel.send(f"Hi I am DoppleGanger :wave:\nThanks for Adding me Into {guild.name}. My Bot Prefix is `{prefix}` (Change it anytime By `{prefix}setprefix`) :partying_face: \nEnjoy Economy, Moderation, Welcome, Logs and many other such Commands :star_struck:\nType `{prefix}help` For more info\n\n-Code Stacks")
-        #            await self.client.pg_con.execute("UPDATE guild SET mainchannel = $1 WHERE guildid = $2",channel.id,guild.id)
-        #            break
-        #await guild.create_role(name = "Muted",colour = 0xFF0C00)
-        #muted = get(guild.roles, name="Muted")
-        #for channel in guild.channels:
-        #    await channel.set_permissions(muted, send_messages = False) 
+        for channel in guild.channels:
+            if str(channel.type) == "text":
+                if "general" in channel.name or "main" in channel.name:
+                    await channel.send(f"Hi I am DoppleGanger :wave:\nThanks for Adding me Into {guild.name}. My Bot Prefix is `{prefix}` (Change it anytime By `{prefix}setprefix`) :partying_face: \nEnjoy Economy, Moderation, Welcome, Logs and many other such Commands :star_struck:\nType `{prefix}help` For more info\n\n-Code Stacks")
+                    await self.client.pg_con.execute("UPDATE guild SET mainchannel = $1 WHERE guildid = $2",channel.id,guild.id)
+                    break
+        await guild.create_role(name = "Muted",colour = 0xFF0C00)
+        muted = get(guild.roles, name="Muted")
+        for channel in guild.channels:
+            await channel.set_permissions(muted, send_messages = False) 
 
 
     @tasks.loop(seconds=3600*10)   
@@ -233,6 +233,11 @@ class Events(commands.Cog):
         emb = discord.Embed(title = "Welcome to {}".format(member.guild.name),color = random.choice(colors))
         emb.set_thumbnail(url= member.guild.icon_url)
         emb.add_field(name = "Thanks for joining " , value =":slight_smile:",inline =False)
+        try:
+            await member.send(embed =emb)
+            await member.send("Check out my Youtube Channel ,Give it Subscribe if you like -\nhttps://www.youtube.com/channel/UCBwVvFWzp01YMD9ibqhSkEg")
+        except:
+            pass
         await self.check(member.id)
     
     
