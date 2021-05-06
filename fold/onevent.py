@@ -233,11 +233,6 @@ class Events(commands.Cog):
         emb = discord.Embed(title = "Welcome to {}".format(member.guild.name),color = random.choice(colors))
         emb.set_thumbnail(url= member.guild.icon_url)
         emb.add_field(name = "Thanks for joining " , value =":slight_smile:",inline =False)
-        try:
-            await member.send(embed =emb)
-            await member.send("Check out my Youtube Channel ,Give it Subscribe if you like -\nhttps://www.youtube.com/channel/UCBwVvFWzp01YMD9ibqhSkEg")
-        except:
-            pass
         await self.check(member.id)
     
     
