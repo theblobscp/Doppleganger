@@ -196,6 +196,9 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self,member:discord.Member):
         guildid = member.guild.id
+        if guildid==779743464774434857:
+            commoner = get(member.guild.roles , id = 780294034098749470)
+            await member.add_roles(commoner)
         channelid = await self.client.pg_con.fetchrow("SELECT mainchannel FROM guild WHERE guildid = $1",guildid)
         if channelid[0] is None:
             return
