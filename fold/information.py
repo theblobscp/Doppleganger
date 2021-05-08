@@ -20,6 +20,8 @@ urls = {"demonslayer":"https://wallpapercave.com/wp/wp5486939.jpg",
         "binary":"https://images.wallpaperscraft.com/image/code_coding_binary_code_abstract_patterns_112140_1280x720.jpg",
         "default":"https://images.hdqwalls.com/download/anime-sunset-scene-b8-1280x720.jpg"}
 
+afks = []
+
 def afk_remove(name):
     if "[AFK]" in name:
         name = name.replace("[AFK] ","")
@@ -44,25 +46,21 @@ class Information(commands.Cog):
         self.client = client
         
     @commands.command(aliases= ["afkset", "setafk"])
-    async def afk(self,ctx, mins = 2, *, reason = "No reason Provided"):
+    async def afk(self,ctx, mins = None, *, reason = "No reason Provided"):
+        if mins is None:
+            mins = 2
         current_nick = afk_remove(ctx.author.display_name)
         prefix = await self.client.pg_con.fetchrow("SELECT prefix FROM guild WHERE guildid = $1",ctx.guild.id)
         prefix = prefix[0]
-
-        try:
-            afk_role = get(ctx.guild.roles,name="AFK")
-        except:
-            await ctx.send(embed = discord.Embed(title = "No role Named AFK",description= "Ask the Admins or mods in the server to create a Role named 'AFK' to start using this command",color = random.choice(colors)))
-            return
-        em = discord.Embed(description = f"{ctx.author.mention} need to be AFK in order to remove AFK Role(Away from keyboard)",delete_after = 4,color = discord.Colour.red())
-        if afk_role in ctx.author.roles and current_nick==ctx.author.display_name:
+        em = discord.Embed(description = f"{ctx.author.mention} is already AFK (Away from keyboard)",delete_after = 4,color = discord.Colour.red())
+        if ctx.author.id in afks:
             await ctx.send(embed=em,delete_after = 6)
             return
         try:
             mins = int(mins)
             
         except:
-            em = discord.Embed(title =f"Time should be am Integer !! \nType  `{prefix}help` or `{prefix}help + Command_Name` for more info",delete_after = 8,color = discord.Colour.red())
+            em = discord.Embed(description =f"Time should be am Integer !! \nType  `{prefix}help` or `{prefix}help + Command_Name` for more info",delete_after = 8,color = discord.Colour.red())
             await ctx.send(embed = em)
             return
         afk1= discord.Embed(title= ":zzz: Member AFK!", description= f"{ctx.author.mention} Has Gone AFK!", color = ctx.author.color)
@@ -71,30 +69,46 @@ class Information(commands.Cog):
         afk1.add_field(name= "AFK Note:", value= f"{reason}")
         afk1.set_footer(icon_url= ctx.guild.icon_url, text= f"From {ctx.guild.name}")
         await ctx.send(embed=afk1)
-        await ctx.author.add_roles(afk_role)
         try:
             await ctx.author.edit(nick=f"[AFK] {ctx.author.display_name}")
         except :
             ab = discord.Embed(description = f"Can't change {ctx.author.mention} nickname  :sob:",color = discord.Color.red())
             await ctx.send(embed = ab)
         abc = mins * 60
+        afks.append(ctx.author.id)
         await asyncio.sleep(abc)
+        
         afk2= discord.Embed(title= ":wave: Member No Longer AFK!", description= f"{ctx.author.mention} IS NO LONGER AFK!", color = ctx.author.color)
         afk2.set_thumbnail(url= ctx.author.avatar_url)
         afk2.set_footer(icon_url= ctx.guild.icon_url, text= f"From {ctx.guild.name}")
 
-        if afk_role not in ctx.author.roles and current_nick==ctx.author.display_name:
-            return
-        
-
-        if afk_role in ctx.author.roles:
-            await ctx.send(embed=afk2)
-            await ctx.author.remove_roles(afk_role)
-        try:
-            await ctx.author.edit(nick=current_nick)
-        except:
-            pass
+        if ctx.author.id in afks:
+            try:
+                afks.remove(ctx.author.id)
+                
+                await ctx.author.edit(nick=current_nick)
+            except:
+                pass
     
+    @commands.command(aliases= ["afkremove", "removeafk"])
+    async def afkoff(self,ctx):
+        em = discord.Embed(description = f"{ctx.author.mention} need to be AFK in order to remove AFK (Away from keyboard)",delete_after = 4,color = discord.Colour.red())
+        
+        
+        if ctx.author.id not in afks:
+            await ctx.send(embed = em)
+        else:
+            afk2= discord.Embed(title= ":wave: Member No Longer AFK!", description= f"{ctx.author.mention} IS NO LONGER AFK!", color = ctx.author.color)
+            afk2.set_thumbnail(url= ctx.author.avatar_url)
+            afk2.set_footer(icon_url= ctx.guild.icon_url, text= f"From {ctx.guild.name}")
+            await ctx.send(embed=afk2)
+            
+            try:
+                afks.remove(ctx.author.id)
+                
+                await ctx.author.edit(nick=afk_remove(ctx.author.nick))
+            except:
+                pass
     
     async def add(self,id,amount = 2000):
         user = await self.client.pg_con.fetchrow("SELECT * FROM users WHERE userid = $1",id)
@@ -247,30 +261,6 @@ class Information(commands.Cog):
             await ctx.send(f"{counter}) {i}\n{urls[i]}")
             counter+=1  
             
-    @commands.command(aliases= ["afkremove", "removeafk"])
-    async def afkoff(self,ctx):
-        em = discord.Embed(description = f"{ctx.author.mention} need to be AFK in order to remove AFK Role(Away from keyboard)",delete_after = 4,color = discord.Colour.red())
-        
-        try:
-            afk_role = get(guild.roles,name="AFK")
-        except:
-            await ctx.send(embed = discord.Embed(title = "No role Named AFK",description= "Ask the Admins or mods in the server to create a Role named 'AFK' to start using this command",color = random.choice(colors)))
-            return
-        if afk_role not in ctx.author.roles and afk_remove(ctx.author.display_name)==ctx.author.display_name:
-            await ctx.send(embed = em)
-        else:
-            afk2= discord.Embed(title= ":wave: Member No Longer AFK!", description= f"{ctx.author.mention} IS NO LONGER AFK!", color = ctx.author.color)
-            afk2.set_thumbnail(url= ctx.author.avatar_url)
-            afk2.set_footer(icon_url= ctx.guild.icon_url, text= f"From {ctx.guild.name}")
-            await ctx.send(embed=afk2)
-            try:
-                await ctx.author.remove_roles(afk_role)
-            except:
-                pass
-            try:
-                await ctx.author.edit(nick=afk_remove(ctx.author.nick))
-            except:
-                pass
 
 
 

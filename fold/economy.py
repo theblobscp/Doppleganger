@@ -18,12 +18,12 @@ type = discord.Embed(title="Invalid Unit !",description = f"Amount should be an 
 amount = discord.Embed(title = "Amount Missing!", description = "Please enter the amount to be used !",color = discord.Colour.red())      
 
 names = ['Jenny','Lauren','Humble','Dan','Matthew','Blacksmith','Clarke','Simon','Christian','Hector','Albert','Vader','Walker','Phillip']
-shopping = [{"name":"demonslayer","price" : 129000 , "description" : "Set this Anime Background in your Profile by `.set + demonslayer` Click [HERE](https://wallpapercave.com/wp/wp5486939.jpg) for Image Preview" } ,
-            {"name":"warzone","price" : 70000 , "description" : "Set this Gaming Background in your Profile by `.set + warzone` Click [HERE](https://wallpaperaccess.com/full/930562.jpg) for Image Preview" } ,
+shopping = [{"name":"demonslayer","price" : 120000 , "description" : "Set this Anime Background in your Profile by `.set + demonslayer` Click [HERE](https://wallpapercave.com/wp/wp5486939.jpg) for Image Preview" } ,
+            {"name":"warzone","price" : 100000 , "description" : "Set this Gaming Background in your Profile by `.set + warzone` Click [HERE](https://wallpaperaccess.com/full/930562.jpg) for Image Preview" } ,
             {"name":"maskcodes","price" : 20000 , "description" : "Set this Coding Background in your Profile by `.set + maskcodes` Click [HERE](https://www.zastavki.com/pictures/1280x720/2019Creative_Wallpaper_Gas_mask_with_a_numerical_code_background_136603_26.jpg) for Image Preview" },
-            {"name":"mikasa","price" : 109000 , "description" : "Set this Anime Background in your Profile by `.set + mikasa` Click [HERE](https://images.wallpapersden.com/image/download/anime-shingeki-no-kyojin-mikasa-ackerman_ZmZna26UmZqaraWkpJRmZ21lrWxnZQ.jpg) for Image Preview" } ,
+            {"name":"mikasa","price" : 199999 , "description" : "Set this Anime Background in your Profile by `.set + mikasa` Click [HERE](https://images.wallpapersden.com/image/download/anime-shingeki-no-kyojin-mikasa-ackerman_ZmZna26UmZqaraWkpJRmZ21lrWxnZQ.jpg) for Image Preview" } ,
             {"name":"devilmay","price" : 40000 , "description" : "Set this Gaming Background in your Profile by `.set + devilmay` Click [HERE](https://images.wallpapersden.com/image/download/devil-may-cry-5-4k_a2hubWyUmZqaraWkpJRmZ21lrWxnZQ.jpg) for Image Preview" } ,
-            {"name":"binary","price" : 10000 , "description" : "Set this Coding Background in your Profile by `.set + binary` Click [HERE](https://images.wallpaperscraft.com/image/code_coding_binary_code_abstract_patterns_112140_1280x720.jpg) for Image Preview" } ]
+            {"name":"binary","price" : 100000 , "description" : "Set this Coding Background in your Profile by `.set + binary` Click [HERE](https://images.wallpaperscraft.com/image/code_coding_binary_code_abstract_patterns_112140_1280x720.jpg) for Image Preview" } ]
 
 
 

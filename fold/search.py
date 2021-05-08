@@ -12,7 +12,7 @@ from youtube_search import YoutubeSearch
 import animec
 import os
 
-colors=[1752220,3066993,3447003,10181046,15844367,15105570,15158332,16580705]
+
 client1 = wolframalpha.Client("LH6XXP-3U64EU2EHX") 
 reddit = praw.Reddit(client_id = "laqA2QEwsdXP9A",
                     client_secret = "z6NHXe06ch_h8Iyn2mtbn1FkIJ4pfg",

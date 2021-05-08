@@ -11,7 +11,7 @@ from discord.utils import get
 from chatterbot.trainers import ChatterBotCorpusTrainer,ListTrainer
 from chatterbot import ChatBot
 from bot import colors
-
+import datetime
 
 chatbot = ChatBot("DoppleGanger")
 listtrainer = ListTrainer(chatbot)
@@ -196,6 +196,16 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self,member:discord.Member):
         guildid = member.guild.id
+        emb = discord.Embed(title = "Welcome to {}".format(member.guild.name),color = random.choice(colors))
+        emb.set_thumbnail(url= member.guild.icon_url)
+        emb.add_field(name = "Thanks for joining " , value ="Enjoy your Stay :slight_smile:",inline =False)
+        emb.timestamp = datetime.datetime.utcnow()
+        try:
+            await member.send("Check out my Youtube Channel ,Give it Subscribe if you like -\nhttps://www.youtube.com/channel/UCBwVvFWzp01YMD9ibqhSkEg")
+            await member.send(embed =emb)
+        except:
+            pass
+        await self.check(member.id)
         if guildid==779743464774434857:
             commoner = get(member.guild.roles , id = 780294034098749470)
             await member.add_roles(commoner)
@@ -233,15 +243,6 @@ class Events(commands.Cog):
         await wchannel.send(file = discord.File('profile.png'),embed = embed)
         os.remove("profile.png")
 
-        emb = discord.Embed(title = "Welcome to {}".format(member.guild.name),color = random.choice(colors))
-        emb.set_thumbnail(url= member.guild.icon_url)
-        emb.add_field(name = "Thanks for joining " , value =":slight_smile:",inline =False)
-        try:
-            await member.send(embed =emb)
-            await member.send("Check out my Youtube Channel ,Give it Subscribe if you like -\nhttps://www.youtube.com/channel/UCBwVvFWzp01YMD9ibqhSkEg")
-        except:
-            pass
-        await self.check(member.id)
     
     
     @commands.Cog.listener()
@@ -300,7 +301,64 @@ class Events(commands.Cog):
                 "My prefix here is `{}`".format(prefix[0])
             )
         
-        
+    @commands.command()
+    async def roles(self,ctx):
+        embed = discord.Embed(title = "Gender Roles",description = """
+
+Express yourself with these roles that describes your gender! Grab them now!
+
+:male_sign: ➤ for Male
+
+:female_sign: ➤ for Female
+
+:transgender_symbol: ➤ IDFC about my Gender
+
+""",color = random.choice(colors))
+        embed.set_footer(text = "Stay strong people nobody's gonna judge you by your gender ^-^")
+        embed.set_thumbnail(url = self.client.user.avatar_url)
+        await ctx.send(embed = embed)
+
+    @commands.command()
+    async def role1(self,ctx):
+        embed = discord.Embed(title = "Gender Roles",description = """
+
+Express yourself with these roles that describes your gender! Grab them now!
+
+<:python:788793286827180042>  ➤  Python Helpers and Masters
+
+<:c_:817634223665840139>  ➤  C# Devs and Helper
+
+<:html_css:789078584479186985>  ➤  HTML and CSS helper
+
+<:java:817638977254326282>  ➤  Java Developers and Helper
+
+<:javascript:789078580818083872>  ➤  JavaScript Masters
+
+""",color = random.choice(colors))
+        embed.set_footer(text = "For Programmers ^-^ , other's might react as well")
+        embed.set_thumbnail(url = self.client.user.avatar_url)
+        await ctx.send(embed = embed)
+    @commands.command()
+    async def role2(self,ctx):
+        embed = discord.Embed(title = "Gamers Role",description = """
+
+Express yourself with these roles which decribes your Coreness in Games
+
+<:minecraft:840199862082863114>   ➤   MineCraft Player
+
+<:gtav:840201336061952010>   ➤   GTA V Player
+
+<:pubg:840201335084810311>   ➤   PUBG Player
+
+<:csgo:840199858564366396>   ➤   CSGO Player
+
+
+
+
+""",color = random.choice(colors))
+        embed.set_footer(text = "For Gamers ^-^ , other's might react as well")
+        embed.set_thumbnail(url = self.client.user.avatar_url)
+        await ctx.send(embed = embed)
 
 def setup(client):
     client.add_cog(Events(client))
