@@ -537,7 +537,7 @@ New Balance: **{credits}**
 
                 
     @commands.command(aliases = ['hunting'])
-    @commands.cooldown(1, 1000)
+    @commands.cooldown(1, 1000 , type = commands.BucketType.user)
     async def hunt(self,ctx):
         animal = random.choice(huntanimals)
         if animal != 0:
@@ -553,7 +553,7 @@ New Balance: **{credits}**
         await ctx.send(embed = embed)
 
     @commands.command(aliases = ['fishing'])
-    @commands.cooldown(1, 1200 )
+    @commands.cooldown(1, 1200  , type = commands.BucketType.user)
     async def fish(self,ctx):
         fish = random.choice(fishcate)
         if fish != 0:
