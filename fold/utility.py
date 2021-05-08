@@ -17,12 +17,14 @@ class Utility(commands.Cog):
         await ctx.message.reply(f"PREFIX updated to `{prefix}`")
 
     @commands.command(aliases = ['mainchannel'])
+    @commands.has_permissions(administrator=True) 
     async def setmain(self,ctx,channel:discord.TextChannel):
         await self.client.pg_con.execute("UPDATE guild SET mainchannel = $1 WHERE guildid = $2",channel.id,ctx.guild.id)
         embed = discord.Embed(title = "Main Channel Updated",description = f"Main channel has been set to {channel.mention}",color = random.choice(colors))
         await ctx.send(embed = embed)
 
     @commands.command(aliases = ['sugchannel'])
+    @commands.has_permissions(administrator=True) 
     async def setsuggestion(self,ctx,channel:discord.TextChannel):
         prefix = await self.client.pg_con.fetchrow("SELECT prefix FROM guild WHERE guildid = $1",ctx.guild.id)
         prefix = prefix[0]
@@ -31,12 +33,14 @@ class Utility(commands.Cog):
         await ctx.send(embed = embed)
     
     @commands.command(aliases = ['aichannel'])
+    @commands.has_permissions(administrator=True) 
     async def setaichatbot(self,ctx,channel:discord.TextChannel):
         await self.client.pg_con.execute("UPDATE guild SET aichannel = $1 WHERE guildid = $2",channel.id,ctx.guild.id)
         embed = discord.Embed(title = "AI-chatbot Channel Updated",description = f"Now Enjoy talking with AI chabot in {channel.mention}\nYou can start talking to the Chatbot now. Why not start with sayin 'HI' or something :)",color = random.choice(colors))
         await ctx.send(embed = embed)
 
     @commands.command(aliases = ['logchannel'])
+    @commands.has_permissions(administrator=True) 
     async def setlogs(self,ctx,channel:discord.TextChannel):
         await self.client.pg_con.execute("UPDATE guild SET logchannel = $1 WHERE guildid = $2",channel.id,ctx.guild.id)
         embed = discord.Embed(title = "Log Channel Updated",description = f"Log channel has been set to {channel.mention}\nNow get the Information regarding the status, activity, Nickname, Roles, Pending of every person in the server",color = random.choice(colors))
@@ -87,6 +91,7 @@ class Utility(commands.Cog):
     
 
     @commands.command(aliases = ['createmute'])
+    @commands.has_permissions(administrator=True) 
     async def mutedrole(self,ctx):
         try:
             muted = get(ctx.guild.roles,name="Muted")
