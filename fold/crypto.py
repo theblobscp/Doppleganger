@@ -19,7 +19,6 @@ class Crypto(commands.Cog):
 
     @commands.command(aliases = ['encodeimg'])
     async def imgenc(self, ctx):
-        await ctx.message.delete()
         if len(ctx.message.attachments) <= 0:
             await ctx.send(embed = discord.Embed(description = "Make sure your msg have an image attached with it.", color = discord.Colour.red()),delete_after = 6)
             return
@@ -84,7 +83,6 @@ class Crypto(commands.Cog):
 
     @commands.command(aliases = ['enc'])
     async def encode(self, ctx, *, string):
-        await ctx.message.delete()
         try:
             ss = string.encode("ascii") 
             base64_bytes = base64.b64encode(ss) 
