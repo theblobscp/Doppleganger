@@ -46,7 +46,7 @@ class Information(commands.Cog):
     @commands.command(aliases= ["afkset", "setafk"])
     async def afk(self,ctx, mins = 2, *, reason = "No reason Provided"):
         current_nick = afk_remove(ctx.author.display_name)
-        prefix = await client.pg_con.fetchrow("SELECT prefix FROM guild WHERE guildid = $1",ctx.guild.id)
+        prefix = await self.client.pg_con.fetchrow("SELECT prefix FROM guild WHERE guildid = $1",ctx.guild.id)
         prefix = prefix[0]
 
         try:
