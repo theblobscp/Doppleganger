@@ -27,11 +27,98 @@ class Search(commands.Cog):
     def __init__(self,client):
         self.client = client
 
-    @commands.command(aliases = ['lyric'])
-    async def lyrics(self,ctx,*,song):
-        url = animec.sagasu._searchLyrics_(song)
-        await ctx.send(url)
+    @commands.command(aliases = ['anilyrics'])
+    async def lyrics(self, ctx, *, arg):   
+        try:    
+            await ctx.trigger_typing()
 
+            if arg.lower() == "types":
+                await ctx.send(embed = discord.Embed(title = "Available Lyrics Types", description = "Romaji | Kanji | English", color = discord.Color.green()))
+                return
+    
+            if "romaji" in arg.lower():
+                song = arg.lower().replace("romaji", "")
+                lyrics = animec.anilyrics(song)
+                lang = lyrics.romaji
+            
+            if "english" in arg.lower():
+                song = arg.lower().replace("english", "")
+                lyrics = animec.anilyrics(song)
+                lang = lyrics.english           
+            
+            if "kanji" in arg.lower():
+                song = arg.lower().replace("kanji", "")
+                lyrics = animec.anilyrics(song)
+                lang = lyrics.kanji
+            
+            if not any(i in arg for i in ['romaji','english','kanji']):
+                song = arg  
+                lyrics = animec.anilyrics(arg)
+                lang = lyrics.romaji
+            
+            name_list = lyrics.url.split("/")
+            name = name_list.pop(len(name_list) - 1)
+            try:
+                name = name.replace("-", " ").title()
+            except:
+                name = name.title()
+
+            if len(lang) >= 2048:
+                e1 = discord.Embed(title = name, description = lang[:2000], url = lyrics.url, color = 0xD9A7D4)
+                e2 = discord.Embed(title = name, url = lyrics.url, description = lang[2000:], color = 0xD9A7D4)
+                if len(lang) >= 2048 * 3:
+                    e3 = discord.Embed(title = name, url = lyrics.url, description = lang[4000:], color = 0xD9A7D4)
+                msg = await ctx.send(embed = e1)
+                await msg.add_reaction("⏪")
+                await msg.add_reaction("⏩")
+                
+                def check(reaction, user):
+                    return reaction.message.id == msg.id and user == ctx.author
+
+                page = 1
+
+                while True:
+                    try:
+                        reaction, _ = await self.client.wait_for('reaction_add', timeout= 200.0, check=check)
+
+                        if reaction.emoji == "⏩":
+                            page += 1
+                            if page == 1:
+                                em = e1
+                            elif page == 2:
+                                em = e2
+                            elif page == 3:
+                                try:
+                                    em = e3
+                                except:
+                                    em = e2
+                            await msg.edit(embed = em)
+                            await msg.remove_reaction("⏩", ctx.author)
+
+                        if reaction.emoji == "⏪":
+                            page -= 1
+                            if page == 1:
+                                em = e1
+                            elif page == 2:
+                                em = e2
+                            elif page == 3:
+                                try:
+                                    em = e3
+                                except:
+                                    em = e2
+                            await msg.edit(embed = e1)
+                            await msg.remove_reaction("⏪", ctx.author)
+
+                    except asyncio.TimeoutError:
+                        await msg.clear_reactions() 
+            
+            else:
+                embed = discord.Embed(title = name, description = lang, url = lyrics.url, color = 0xD9A7D4)
+                embed.set_footer(text = f"Requested By: {ctx.author}")
+                await ctx.send(embed = embed)
+        except animec.sagasu.NoResultFound:
+            await ctx.send(embed = discord.Embed(description = "No lyrics for such song found.", color = discord.Color.green()))
+        
     @commands.command(aliases = ['me'])
     async def meme(self,ctx):
         try:
