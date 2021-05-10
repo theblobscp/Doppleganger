@@ -6,7 +6,7 @@ import cogs
 import random
 import asyncpg
 
-client = commands.Bot(command_prefix = ".", intents =discord.Intents.all(),case_insensitive = True,help_command= None)
+client = commands.Bot(command_prefix = ".", intents = discord.Intents.all(), case_insensitive = True, help_command= None, owner_ids = [728146726464127006, 779743087572025354])
 
 colors = [0x0dd2ff,0x03f5ff,0x2affa9,0x18e6ff,0x17ffc2,0x03f5ff,0x30e79d]
 
