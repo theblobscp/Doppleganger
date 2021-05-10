@@ -5,20 +5,16 @@ from discord.ext import commands
 import cogs
 import random
 import asyncpg
-import jishaku
 
 client = commands.Bot(command_prefix = ".", intents =discord.Intents.all(),case_insensitive = True,help_command= None)
 
-
-
 colors = [0x0dd2ff,0x03f5ff,0x2affa9,0x18e6ff,0x17ffc2,0x03f5ff,0x30e79d]
 
+os.environ.setdefault("JISHAKU_NO_UNDERSCORE", "1")
 
 client.load_extension('jishaku')
 DATABASE_URL = os.environ["DATABASE_URL"]
     
-
-
 async def create_db_pool():
     #client.pg_con = await asyncpg.create_pool(database = "Code Stacks",user = "postgres",password = "12382692")
     client.pg_con = await asyncpg.create_pool(DATABASE_URL,ssl = "require")
