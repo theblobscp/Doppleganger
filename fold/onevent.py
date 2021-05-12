@@ -196,15 +196,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self,member:discord.Member):
         guildid = member.guild.id
-        emb = discord.Embed(title = "Welcome to {}".format(member.guild.name),color = random.choice(colors))
-        emb.set_thumbnail(url= member.guild.icon_url)
-        emb.add_field(name = "Thanks for joining " , value ="Enjoy your Stay :slight_smile:",inline =False)
-        emb.timestamp = datetime.datetime.utcnow()
-        try:
-            await member.send("Check out my Youtube Channel ,Give it Subscribe if you like -\nhttps://www.youtube.com/channel/UCBwVvFWzp01YMD9ibqhSkEg")
-            await member.send(embed =emb)
-        except:
-            pass
+        
         await self.check(member.id)
         if guildid==779743464774434857:
             commoner = get(member.guild.roles , id = 780294034098749470)
