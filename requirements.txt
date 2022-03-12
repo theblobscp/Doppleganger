@@ -41,7 +41,7 @@ more-itertools==8.7.0
 multidict==5.1.0
 nltk==3.6.2
 packaging==20.9
-Pillow==8.2.0
+Pillow==9.0.1
 Pint==0.17
 praw==7.2.0
 prawcore==2.0.0
